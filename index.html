@@ -41,10 +41,10 @@
         let currentInput = "";
 
         function appendToDisplay(value) {
-            let lastNumber = currentInput.split(/[\+\-\*\/]/).pop(); // Get the last number entered
+            let lastNumber = currentInput.split(/[\+\-\*\/]/).pop();
 
             if (value === "." && lastNumber.includes(".")) {
-                return; // Prevent multiple decimals in the same number
+                return;
             }
 
             if (currentInput === "0" && value !== ".") {
