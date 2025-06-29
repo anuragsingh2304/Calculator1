@@ -24,7 +24,7 @@
             <button class="number" onclick="appendToDisplay('4')">4</button>
             <button class="number" onclick="appendToDisplay('5')">5</button>
             <button class="number" onclick="appendToDisplay('6')">6</button>
-            <button class="operator" onclick="appendToDisplay('+')">+</button>
+            <button class="operator " onclick="appendToDisplay('+')">+</button>
 
             <button class="number" onclick="appendToDisplay('1')">1</button>
             <button class="number" onclick="appendToDisplay('2')">2</button>
@@ -36,41 +36,65 @@
         </div>
     </div>
 
-    <script>
-        let display = document.getElementById('display');
-        let currentInput = "";
+<script>
+    let display = document.getElementById('display');
+    let currentInput = "";
 
-        function appendToDisplay(value) {
-            let lastNumber = currentInput.split(/[\+\-\*\/]/).pop();
+    function appendToDisplay(value) {
+        if (currentInput === "0" && value !== ".") {
+            currentInput = value;
+        } else {
+            currentInput += value;
+        }
 
-            if (value === "." && lastNumber.includes(".")) {
-                return;
-            }
+        display.innerText = currentInput;
+    }
 
-            if (currentInput === "0" && value !== ".") {
-                currentInput = value;
-            } else {
-                currentInput += value;
-            }
+    function clearDisplay() {
+        currentInput = "0";
+        display.innerText = currentInput;
+    }
 
+    function calculateResult() {
+        try {
+            // Replace a%b with (b*(a/100))
+            const percentagePattern = /(\d+(\.\d+)?)%(\d+(\.\d+)?)/g;
+            let expression = currentInput.replace(percentagePattern, (_, a, _1, b) => {
+                return `(${b}*(${a}/100))`;
+            });
+
+            // Evaluate the final expression
+            currentInput = eval(expression).toString();
+            display.innerText = currentInput;
+        } catch (err) {
+            display.innerText = "Error";
+            currentInput = "";
+        }
+    }
+
+    // 🔑 Keyboard Support
+    document.addEventListener("keydown", function (event) {
+        const key = event.key;
+
+        if (!isNaN(key)) {
+            appendToDisplay(key); // Number keys
+        } else if (["+", "-", "*", "/"].includes(key)) {
+            appendToDisplay(key); // Operators
+        } else if (key === "Enter" || key === "=") {
+            event.preventDefault();
+            calculateResult(); // Calculate
+        } else if (key === ".") {
+            appendToDisplay("."); // Decimal
+        } else if (key === "Escape" || key.toLowerCase() === "c") {
+            clearDisplay(); // Clear
+        } else if (key === "%") {
+            appendToDisplay("%"); // Add percent operator
+        } else if (key === "Backspace") {
+            currentInput = currentInput.slice(0, -1) || "0";
             display.innerText = currentInput;
         }
-
-        function clearDisplay() {
-            currentInput = "0";
-            display.innerText = currentInput;
-        }
-
-        function calculateResult() {
-            try {
-                currentInput = eval(currentInput).toString();
-                display.innerText = currentInput;
-            } catch {
-                display.innerText = "Error";
-                currentInput = "";
-            }
-        }
-    </script>
+    });
+</script>
 
 </body>
 </html>
