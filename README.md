@@ -48,12 +48,6 @@ This calculator can also be operated directly using your keyboard.
 
 ---
 
-## 📸 Screenshot
-
-> *(Include a screenshot of your calculator UI here if you're uploading to GitHub)*
-
----
-
 ## 📁 File Structure
 ```
 calculator/
@@ -61,5 +55,12 @@ calculator/
 ├── style.css
 └── script.js 
 ```
+
+## 📸 Screenshot
+
+![Calculator screen shot](./calculator.png)
+
+---
+
 
 ## Created by [Atul Mishra](https://github.com/AtulMishra001)
