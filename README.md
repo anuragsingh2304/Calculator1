@@ -63,4 +63,3 @@ calculator/
 ---
 
 
-## Created by [Atul Mishra](https://github.com/AtulMishra001)
